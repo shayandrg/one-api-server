@@ -2,6 +2,8 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const https = require('https');
 const fs = require('fs');
+const EventEmitter = require('events');
+EventEmitter.defaultMaxListeners = 20;
 
 const app = express();
 const port = 443;
