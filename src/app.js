@@ -9,14 +9,14 @@ const port = 443;
 app.use(express.json({ limit: '64mb' }));
 
 const proxyOptions = {
-  target: 'http://one-api:3000', // Change to Docker service name
+  target: 'http://one-api:3000',
   changeOrigin: true,
   onProxyReq: (proxyReq, req, res) => {
     proxyReq.setHeader('Host', req.headers.host);
     proxyReq.setHeader('X-Forwarded-For', req.connection.remoteAddress);
   },
   onProxyRes: (proxyRes, req, res) => {
-    proxyRes.headers['Content-Encoding'] = 'gzip';
+    delete proxyRes.headers['content-encoding']; // Remove content-encoding header if present
   },
   onProxyReqWs: (proxyReq, req, socket, options, head) => {
     proxyReq.setHeader('X-Forwarded-For', req.connection.remoteAddress);
