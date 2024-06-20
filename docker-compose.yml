@@ -10,6 +10,8 @@ services:
       NODE_ENV: production
     depends_on:
       - one-api
+    networks:
+      - app-network
 
   one-api:
     image: justsong/one-api-en
@@ -21,3 +23,9 @@ services:
       - /home/ubuntu/data/one-api:/data
     expose:
       - "3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
