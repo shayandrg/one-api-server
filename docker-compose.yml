@@ -1,10 +1,10 @@
 version: '3'
 services:
   app:
-    image: node:20
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
+    build: .
     ports:
-      - "3000:3000"
-    command: sh -c "npm install && npm start"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    environment:
+      NODE_ENV: production

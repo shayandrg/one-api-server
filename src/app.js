@@ -1,8 +1,11 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = 443; // Use port 443 for HTTPS
 
 app.use(express.json({ limit: '64mb' }));
 
@@ -21,8 +24,19 @@ const proxyOptions = {
   },
 };
 
-app.use('/', createProxyMiddleware(proxyOptions));
+app.use((req, res, next) => {
+  if (req.hostname === 'ai.livecdn.website') {
+    createProxyMiddleware(proxyOptions)(req, res, next);
+  } else {
+    res.status(404).send('Not Found');
+  }
+});
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/ai.livecdn.website/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/ai.livecdn.website/fullchain.pem')
+};
+
+https.createServer(options, app).listen(port, () => {
+  console.log(`Server is running and listening on port ${port}`);
 });
