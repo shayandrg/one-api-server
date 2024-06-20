@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const port = 443; // Use port 443 for HTTPS
+const port = 443;
 
 app.use(express.json({ limit: '64mb' }));
 
@@ -25,14 +25,13 @@ const proxyOptions = {
 };
 
 app.use((req, res, next) => {
-    console.log(`Request received for ${req.hostname}`);
-    if (req.hostname === 'ai.livecdn.website') {
-      createProxyMiddleware(proxyOptions)(req, res, next);
-    } else {
-      res.status(404).send('Not Found');
-    }
-  });
-  
+  console.log(`Request received for ${req.hostname}`);
+  if (req.hostname === 'ai.livecdn.website') {
+    createProxyMiddleware(proxyOptions)(req, res, next);
+  } else {
+    res.status(404).send('Not Found');
+  }
+});
 
 const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/ai.livecdn.website/privkey.pem'),
