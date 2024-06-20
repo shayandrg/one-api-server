@@ -21,4 +21,4 @@ services:
     depends_on:
       - one-api
     volumes:
-      - /etc/letsencrypt/live/ai.eron.co:/etc/letsencrypt/live/ai.eron.co:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
