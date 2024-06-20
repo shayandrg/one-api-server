@@ -8,3 +8,16 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
     environment:
       NODE_ENV: production
+    depends_on:
+      - one-api
+
+  one-api:
+    image: justsong/one-api-en
+    container_name: one-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /home/ubuntu/data/one-api:/data

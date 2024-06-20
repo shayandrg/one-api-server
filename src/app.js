@@ -2,7 +2,6 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const https = require('https');
 const fs = require('fs');
-const path = require('path');
 
 const app = express();
 const port = 443;
@@ -10,7 +9,7 @@ const port = 443;
 app.use(express.json({ limit: '64mb' }));
 
 const proxyOptions = {
-  target: 'http://localhost:3000',
+  target: 'http://one-api:3000', // Change to Docker service name
   changeOrigin: true,
   onProxyReq: (proxyReq, req, res) => {
     proxyReq.setHeader('Host', req.headers.host);
