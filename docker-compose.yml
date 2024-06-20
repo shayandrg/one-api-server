@@ -1,13 +1,10 @@
-version: '3'
+version: '3.8'
 services:
-  proxy:
+  nginx:
     build: .
     ports:
+      - "80:80"
       - "443:443"
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-    environment:
-      NODE_ENV: production
     depends_on:
       - one-api
     networks:

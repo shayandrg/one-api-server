@@ -1,12 +1,7 @@
-FROM node:20
+FROM nginx:latest
 
-WORKDIR /usr/src/app
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-EXPOSE 443
-
-CMD ["node", "src/app.js"]
+RUN mkdir -p /etc/letsencrypt/live/ai.livecdn.website/
+COPY /path/to/certificates/fullchain.pem /etc/letsencrypt/live/ai.livecdn.website/fullchain.pem
+COPY /path/to/certificates/privkey.pem /etc/letsencrypt/live/ai.livecdn.website/privkey.pem
