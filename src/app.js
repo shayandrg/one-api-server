@@ -16,7 +16,7 @@ const proxyOptions = {
     proxyReq.setHeader('X-Forwarded-For', req.connection.remoteAddress);
   },
   onProxyRes: (proxyRes, req, res) => {
-    delete proxyRes.headers['content-encoding'];
+    // delete proxyRes.headers['content-encoding'];
   },
   onProxyReqWs: (proxyReq, req, socket, options, head) => {
     proxyReq.setHeader('X-Forwarded-For', req.connection.remoteAddress);
