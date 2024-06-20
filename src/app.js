@@ -25,12 +25,14 @@ const proxyOptions = {
 };
 
 app.use((req, res, next) => {
-  if (req.hostname === 'ai.livecdn.website') {
-    createProxyMiddleware(proxyOptions)(req, res, next);
-  } else {
-    res.status(404).send('Not Found');
-  }
-});
+    console.log(`Request received for ${req.hostname}`);
+    if (req.hostname === 'ai.livecdn.website') {
+      createProxyMiddleware(proxyOptions)(req, res, next);
+    } else {
+      res.status(404).send('Not Found');
+    }
+  });
+  
 
 const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/ai.livecdn.website/privkey.pem'),
