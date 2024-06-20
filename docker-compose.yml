@@ -1,16 +1,5 @@
-version: '3.8'
+version: '3'
 services:
-  nginx:
-    build: .
-    ports:
-      - "443:443"
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-    depends_on:
-      - one-api
-    networks:
-      - app-network
-
   one-api:
     image: justsong/one-api-en
     container_name: one-api
@@ -21,9 +10,15 @@ services:
       - /home/ubuntu/data/one-api:/data
     expose:
       - "3000"
-    networks:
-      - app-network
 
-networks:
-  app-network:
-    driver: bridge
+  nginx:
+    build: .
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - one-api
+    volumes:
+      - /etc/letsencrypt/live/ai.eron.co:/etc/letsencrypt/live/ai.eron.co:ro
