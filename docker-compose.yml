@@ -10,6 +10,7 @@ services:
       - /home/ubuntu/data/one-api:/data
     expose:
       - "3000"
+    mem_limit: 300m
 
   nginx:
     build: .
