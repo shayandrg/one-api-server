@@ -11,6 +11,7 @@ services:
     expose:
       - "3000"
     mem_limit: 300m
+    cpus: 0.5
 
   nginx:
     build: .
